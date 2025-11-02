@@ -1,0 +1,17 @@
+# Venv & Python Cache (isolation for agent envs, Lecture 2a)
+csc415_emotion_venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Large Data (post-training; download via README, Lecture 1b data mining)
+data/fer2013.csv
+*.h5  # Or commit model if small; ignore for privacy
+
+# Logs & Temp (episodic noise, Lecture 2a discrete tasks)
+*.log
+training_history.png  # Commit if for submission; ignore for dev
+
+# OS/IDE Files (nondeterministic env artifacts, Lecture 2a)
+.DS_Store
+.vscode/settings.json  # Keep .vscode/ if shared configs needed

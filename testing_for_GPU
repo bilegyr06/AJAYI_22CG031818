@@ -1,0 +1,16 @@
+import tensorflow as tf
+
+print("TensorFlow Version:", tf.__version__)  # 2.20.0
+gpus = tf.config.list_physical_devices('GPU')
+print("GPUs Detected:", len(gpus))  # 1 if yes
+if gpus:
+    print("GPU Details:", gpus[0])  # e.g., GTX 1050 Ti
+    tf.config.experimental.set_memory_growth(gpus[0], True)  # Prevents OOM
+else:
+    print("Fallback to CPU—check CUDA setup!")
+
+# Quick GPU Test: Simple matrix op (like in emotion preprocessing)
+with tf.device('/GPU:0'):
+    a = tf.constant([[1.0, 2.0], [3.0, 4.0]])
+    b = tf.matmul(a, a)
+print("GPU Computation Result:", b)  # If no error, GPU-ready!

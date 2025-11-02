@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSC415 Emotion Detection Agent</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; background: #f0f8ff; }
+        h1 { color: #4169e1; } /* AI-themed blue */
+        form { background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input, button { margin: 10px; padding: 10px; width: 200px; }
+        button { background: #4169e1; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .result { margin-top: 20px; font-size: 18px; color: #228b22; }
+    </style>
+</head>
+<body>
+    <h1>AI Emotion Detection – CSC415 Project</h1>
+    <p>Upload a facial image to let the agent detect your emotion (e.g., Happy, Sad). Trained on FER-2013 dataset.</p>
+    <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="email" name="email" placeholder="Enter your email" required><br>
+        <input type="file" name="file" accept="image/*" required><br>
+        <button type="submit">Detect Emotion</button>
+    </form>
+    {% if emotion %}
+    <div class="result">
+        <h2>Detected Emotion: <strong>{{ emotion }}</strong></h2>
+        <p>Confidence: {{ "%.2f"|format(confidence * 100) }}%</p>
+        <p>Logged in DB for agent learning!</p>
+    </div>
+    {% endif %}
+</body>
+</html>
