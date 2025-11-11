@@ -1,9 +1,8 @@
 from fastapi import FastAPI, UploadFile, File, Form, Request
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse# For dynamic render
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles  # Optional for future static files
-import cv2  # Now used for face detection (computer vision subfield, Lecture 1b)
+from fastapi.staticfiles import StaticFiles
+import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
 import sqlite3
@@ -13,25 +12,23 @@ from datetime import datetime
 
 app = FastAPI(title="CSC415 Emotion Detection Agent")
 templates = Jinja2Templates(directory="templates")
-model = load_model('face_emotionModel.h5')  # Load your trained model
+model = load_model('face_emotionModel.h5')
 
-# DB Setup: Structured representation (Lecture 2a) for user data
+# DB Setup
 conn = sqlite3.connect('database.db', check_same_thread=False)
 c = conn.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS emotions 
              (id INTEGER PRIMARY KEY, user_email TEXT, emotion TEXT, timestamp TEXT, image_path TEXT)''')
 conn.commit()
 
-# Emotion classes (from FER-2013, ties to ML subfield in Lecture 1b)
 emotions = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise', 'Neutral']
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
-    """Home route: Serves frontend – like agent's percept sequence start."""
     return templates.TemplateResponse("index.html", {"request": request})
 
 @app.post("/predict")
-async def predict_emotion(file: UploadFile = File(...), email: str = Form(...), request: Request = None):
+async def predict_emotion(request: Request, file: UploadFile = File(...), email: str = Form(...)):  # FIXED: Request first (no default; FastAPI injects it)
     contents = await file.read()
     
     # NEW: Face Detection with OpenCV (bonus for partial observability, Lecture 2a)
