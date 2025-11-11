@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Render - https://ajayi-22cg031818.onrender.com
+=======
+Vercel - https://vercel.com/ajayi-ayodejis-projects/ajayi-22-cg-031818/FXhKR4E6RabqFBnzRqhSXK8qUuap
+>>>>>>> 2e9dc786be52409ebc98cb81243f0ea25f42d63b
